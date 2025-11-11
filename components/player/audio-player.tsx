@@ -30,7 +30,7 @@ export function AudioPlayer() {
     toggleShuffle,
   } = usePlayerStore()
 
-  const playerRef = useRef<ReactPlayer>(null)
+  const playerRef = useRef<any>(null)
   const [isMuted, setIsMuted] = useState(false)
 
   useEffect(() => {
