@@ -6,15 +6,18 @@ A Spotify-like streaming platform specifically designed for subliminal audio tra
 
 ### Audio Player
 - Persistent bottom player (Spotify-style)
+- **Real-time audio visualizer** (Web Audio API)
 - Full playback controls (play, pause, next, previous)
 - Shuffle and repeat modes
 - Volume control with mute toggle
 - Real-time progress tracking
 - YouTube video support via react-player
 - Audio file support (MP3, WAV, etc.)
+- Track completion tracking for achievements
 
 ### Home Page
-- Hero section with gradient design
+- Hero section with **animated pulsing gradients**
+- **Animated hero text and buttons** with Framer Motion
 - Trending tracks section
 - Featured playlists with grid layout
 - Recent uploads showcase
@@ -38,12 +41,48 @@ A Spotify-like streaming platform specifically designed for subliminal audio tra
 - Anxiety Relief
 - Meditation
 
+### High-Energy Features 🔥
+
+#### Visual Effects
+- **Animated particle background** with floating particles and glow orbs
+- **3D card tilt effects** on track cards (mouse-responsive)
+- **Dynamic glow effects** on playing tracks
+- **Pulsing gradient animations** throughout the UI
+- **Smooth micro-interactions** on all interactive elements
+- **Audio visualizer** with frequency bars (purple/pink/orange gradient)
+
+#### Session Tracking & Gamification
+- **Real-time session timer** tracks current listening session
+- **Streak tracking** - maintain daily listening streaks
+- **Total listening time** accumulation
+- **Achievement system** with 9+ unlockable badges:
+  - 🎧 First Hour - 1 hour total listening
+  - ⭐ Dedicated Listener - 10 hours total
+  - 🏆 Transformation Master - 100 hours total
+  - 🔥 3-Day Streak
+  - 💪 Week Warrior - 7-day streak
+  - 👑 Monthly Master - 30-day streak
+  - 🎵 Explorer - 10 tracks completed
+  - 🌟 Enthusiast - 50 tracks completed
+  - 💎 Centurion - 100 tracks completed
+- **Achievement notifications** with custom animations
+- **Stats widget** in sidebar showing all progress
+
+#### Enhanced Track Cards
+- 3D tilt effect following mouse movement
+- Scale animations on hover/tap
+- Gradient play buttons with shadows
+- Pulsing glow effect on currently playing track
+- Spring physics animations
+
 ### UI/UX
 - Dark theme with vibrant gradients (purple, pink, orange)
-- Smooth animations and transitions
-- Responsive design
+- **High-performance Framer Motion animations**
+- Fully responsive design
 - Category-based emoji icons
 - Toast notifications for user actions
+- **Particle effects** and ambient background animations
+- **Achievement toasts** with emoji and custom styling
 
 ## Tech Stack
 
@@ -76,29 +115,35 @@ npm run dev
 ```
 subliminal/
 ├── app/
-│   ├── layout.tsx          # Root layout with Nav, Sidebar, Player
-│   ├── page.tsx            # Home page
+│   ├── layout.tsx          # Root layout with Nav, Sidebar, Player, Particles
+│   ├── page.tsx            # Home page (with animations)
 │   ├── providers.tsx       # React providers (Toaster)
 │   └── upload/
 │       └── page.tsx        # Upload page
 ├── components/
+│   ├── effects/
+│   │   └── particle-background.tsx  # Animated particle background
 │   ├── layout/
 │   │   ├── nav.tsx         # Top navigation
-│   │   └── sidebar.tsx     # Left sidebar with categories
+│   │   └── sidebar.tsx     # Left sidebar with stats widget
 │   ├── player/
-│   │   └── audio-player.tsx # Persistent audio player
+│   │   ├── audio-player.tsx    # Persistent audio player with visualizer
+│   │   └── audio-visualizer.tsx # Real-time audio visualizer
+│   ├── session/
+│   │   └── stats-widget.tsx    # Session stats, streaks, achievements
 │   ├── upload/
-│   │   ├── file-upload.tsx  # Drag-and-drop file upload
-│   │   └── youtube-link.tsx # YouTube link input
-│   ├── ui/                  # shadcn/ui components
-│   └── track-card.tsx       # Track display card
+│   │   ├── file-upload.tsx     # Drag-and-drop file upload
+│   │   └── youtube-link.tsx    # YouTube link input
+│   ├── ui/                     # shadcn/ui components
+│   └── track-card.tsx          # Enhanced 3D track cards
 ├── lib/
-│   ├── utils.ts            # Utility functions
-│   └── mock-data.ts        # Sample tracks and playlists
+│   ├── utils.ts               # Utility functions
+│   ├── mock-data.ts           # Sample tracks and playlists
+│   └── session-tracker.ts     # Session tracking & achievements
 ├── store/
-│   └── player-store.ts     # Zustand player state
+│   └── player-store.ts        # Zustand player state
 └── types/
-    └── index.ts            # TypeScript interfaces
+    └── index.ts               # TypeScript interfaces
 ```
 
 ## Key Features Explained

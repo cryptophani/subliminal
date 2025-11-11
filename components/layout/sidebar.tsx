@@ -3,11 +3,14 @@
 import Link from 'next/link'
 import { CATEGORIES } from '@/types'
 import { Card } from '@/components/ui/card'
+import { StatsWidget } from '@/components/session/stats-widget'
 
 export function Sidebar() {
   return (
     <aside className="w-64 fixed left-0 top-16 bottom-20 overflow-y-auto p-4 border-r border-white/10">
       <div className="space-y-6">
+        {/* Stats Widget */}
+        <StatsWidget />
         {/* Categories */}
         <div>
           <h3 className="text-sm font-semibold text-white/60 mb-3 px-3">

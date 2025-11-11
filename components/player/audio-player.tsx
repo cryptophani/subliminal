@@ -8,6 +8,8 @@ import { Button } from '@/components/ui/button'
 import { Slider } from '@/components/ui/slider'
 import { cn } from '@/lib/utils'
 import Image from 'next/image'
+import { AudioVisualizer } from './audio-visualizer'
+import { SessionTracker } from '@/lib/session-tracker'
 
 export function AudioPlayer() {
   const {
@@ -61,6 +63,9 @@ export function AudioPlayer() {
   }
 
   const handleEnded = () => {
+    // Track completion for achievements
+    SessionTracker.trackCompletion()
+
     if (repeat === 'one') {
       playerRef.current?.seekTo(0)
     } else if (repeat === 'all' || shuffle) {
@@ -78,6 +83,10 @@ export function AudioPlayer() {
 
   return (
     <div className="fixed bottom-0 left-0 right-0 bg-gradient-to-t from-black/95 via-black/90 to-black/80 backdrop-blur-xl border-t border-white/10 z-50">
+      {/* Visualizer */}
+      <div className="h-16 w-full">
+        <AudioVisualizer />
+      </div>
       <div className="container mx-auto px-4 py-3">
         <div className="flex items-center gap-4">
           {/* Track Info */}
