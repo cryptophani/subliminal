@@ -5,6 +5,7 @@ import { Nav } from "@/components/layout/nav";
 import { Sidebar } from "@/components/layout/sidebar";
 import { AudioPlayer } from "@/components/player/audio-player";
 import { Providers } from "./providers";
+import { ParticleBackground } from "@/components/effects/particle-background";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,10 +33,11 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black text-white`}
       >
         <Providers>
+          <ParticleBackground />
           <Nav />
           <div className="flex pt-16">
             <Sidebar />
-            <main className="flex-1 ml-64 pb-24">
+            <main className="flex-1 ml-64 pb-24 relative z-10">
               {children}
             </main>
           </div>

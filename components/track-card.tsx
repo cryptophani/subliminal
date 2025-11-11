@@ -7,6 +7,8 @@ import { Play, Pause, Heart } from 'lucide-react'
 import { usePlayerStore } from '@/store/player-store'
 import { cn } from '@/lib/utils'
 import Image from 'next/image'
+import { motion } from 'framer-motion'
+import { useState } from 'react'
 
 interface TrackCardProps {
   track: Track
@@ -16,6 +18,7 @@ interface TrackCardProps {
 export function TrackCard({ track, tracks = [] }: TrackCardProps) {
   const { currentTrack, isPlaying, playTrack, togglePlay } = usePlayerStore()
   const isCurrentTrack = currentTrack?.id === track.id
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
 
   const handlePlay = () => {
     if (isCurrentTrack) {
@@ -25,8 +28,39 @@ export function TrackCard({ track, tracks = [] }: TrackCardProps) {
     }
   }
 
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect()
+    const x = (e.clientX - rect.left) / rect.width
+    const y = (e.clientY - rect.top) / rect.height
+    setMousePosition({ x, y })
+  }
+
+  const handleMouseLeave = () => {
+    setMousePosition({ x: 0.5, y: 0.5 })
+  }
+
+  const tiltX = (mousePosition.y - 0.5) * 20
+  const tiltY = (mousePosition.x - 0.5) * -20
+
   return (
-    <Card className="group relative overflow-hidden bg-gradient-to-br from-zinc-900 to-black border-white/10 hover:border-purple-500/30 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/10">
+    <motion.div
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      animate={{
+        rotateX: tiltX,
+        rotateY: tiltY,
+      }}
+      transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+      style={{ transformStyle: 'preserve-3d' }}
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.98 }}
+    >
+      <Card className={cn(
+        "group relative overflow-hidden bg-gradient-to-br from-zinc-900 to-black border-white/10 transition-all duration-300",
+        isCurrentTrack && isPlaying
+          ? "border-purple-500/50 shadow-xl shadow-purple-500/30"
+          : "hover:border-purple-500/30 hover:shadow-lg hover:shadow-purple-500/10"
+      )}>
       <div className="aspect-square relative overflow-hidden">
         {track.thumbnailUrl ? (
           <Image
@@ -52,18 +86,35 @@ export function TrackCard({ track, tracks = [] }: TrackCardProps) {
 
         {/* Overlay */}
         <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-          <Button
-            size="icon"
-            onClick={handlePlay}
-            className="h-14 w-14 rounded-full bg-purple-600 hover:bg-purple-500 text-white shadow-xl hover:scale-110 transition-transform"
-          >
-            {isCurrentTrack && isPlaying ? (
-              <Pause className="h-6 w-6" />
-            ) : (
-              <Play className="h-6 w-6 ml-1" />
-            )}
-          </Button>
+          <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+            <Button
+              size="icon"
+              onClick={handlePlay}
+              className="h-14 w-14 rounded-full bg-gradient-to-br from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white shadow-xl shadow-purple-500/50 transition-all"
+            >
+              {isCurrentTrack && isPlaying ? (
+                <Pause className="h-6 w-6" />
+              ) : (
+                <Play className="h-6 w-6 ml-1" />
+              )}
+            </Button>
+          </motion.div>
         </div>
+
+        {/* Glow effect for playing track */}
+        {isCurrentTrack && isPlaying && (
+          <motion.div
+            className="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-pink-500/20 pointer-events-none"
+            animate={{
+              opacity: [0.3, 0.6, 0.3],
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              ease: 'easeInOut',
+            }}
+          />
+        )}
 
         {/* Like Button */}
         <Button
@@ -102,6 +153,7 @@ export function TrackCard({ track, tracks = [] }: TrackCardProps) {
           <span>{track.likes.toLocaleString()} likes</span>
         </div>
       </div>
-    </Card>
+      </Card>
+    </motion.div>
   )
 }
