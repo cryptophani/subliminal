@@ -1,36 +1,162 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Subliminal - High Energy Audio Streaming Platform
+
+A Spotify-like streaming platform specifically designed for subliminal audio tracks, binaural beats, affirmations, and healing frequencies.
+
+## Features
+
+### Audio Player
+- Persistent bottom player (Spotify-style)
+- Full playback controls (play, pause, next, previous)
+- Shuffle and repeat modes
+- Volume control with mute toggle
+- Real-time progress tracking
+- YouTube video support via react-player
+- Audio file support (MP3, WAV, etc.)
+
+### Home Page
+- Hero section with gradient design
+- Trending tracks section
+- Featured playlists with grid layout
+- Recent uploads showcase
+- Category-based track organization
+
+### Upload System
+- Drag-and-drop file upload
+- YouTube link integration
+- Track metadata form (title, description, category)
+- Multiple file support
+- Real-time upload feedback
+
+### Categories
+- Manifestation
+- Wealth & Abundance
+- Confidence
+- Sleep & Relaxation
+- Healing
+- Focus & Productivity
+- Relationships
+- Anxiety Relief
+- Meditation
+
+### UI/UX
+- Dark theme with vibrant gradients (purple, pink, orange)
+- Smooth animations and transitions
+- Responsive design
+- Category-based emoji icons
+- Toast notifications for user actions
+
+## Tech Stack
+
+- **Framework:** Next.js 14 (App Router)
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS v4
+- **Components:** shadcn/ui (Radix UI)
+- **State Management:** Zustand
+- **Audio Player:** React Player
+- **Animations:** Framer Motion
+- **Notifications:** React Hot Toast
+- **Icons:** Lucide React
 
 ## Getting Started
 
-First, run the development server:
-
+1. Install dependencies:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Run the development server:
+```bash
+npm run dev
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Project Structure
 
-## Learn More
+```
+subliminal/
+├── app/
+│   ├── layout.tsx          # Root layout with Nav, Sidebar, Player
+│   ├── page.tsx            # Home page
+│   ├── providers.tsx       # React providers (Toaster)
+│   └── upload/
+│       └── page.tsx        # Upload page
+├── components/
+│   ├── layout/
+│   │   ├── nav.tsx         # Top navigation
+│   │   └── sidebar.tsx     # Left sidebar with categories
+│   ├── player/
+│   │   └── audio-player.tsx # Persistent audio player
+│   ├── upload/
+│   │   ├── file-upload.tsx  # Drag-and-drop file upload
+│   │   └── youtube-link.tsx # YouTube link input
+│   ├── ui/                  # shadcn/ui components
+│   └── track-card.tsx       # Track display card
+├── lib/
+│   ├── utils.ts            # Utility functions
+│   └── mock-data.ts        # Sample tracks and playlists
+├── store/
+│   └── player-store.ts     # Zustand player state
+└── types/
+    └── index.ts            # TypeScript interfaces
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Key Features Explained
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Audio Player State Management
+The player uses Zustand for state management, handling:
+- Current track and queue
+- Play/pause state
+- Volume control
+- Shuffle and repeat modes
+- Progress tracking
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Track Cards
+Interactive cards that display:
+- Thumbnail or category emoji
+- Track title and creator
+- Play/pause button on hover
+- Play count and likes
+- Visual playing indicator
 
-## Deploy on Vercel
+### Upload System
+Two upload methods:
+1. **File Upload:** Drag-and-drop or click to select audio files
+2. **YouTube Links:** Paste YouTube URLs to embed videos
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Next Steps
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+To make this production-ready, you would need to:
+
+1. **Backend Integration:**
+   - Set up Supabase or another backend
+   - Implement file storage for audio uploads
+   - Create database schema for tracks, users, playlists
+   - Add authentication (Auth0, Supabase Auth, etc.)
+
+2. **YouTube API:**
+   - Integrate YouTube Data API for metadata fetching
+   - Handle video validation and thumbnail extraction
+
+3. **Additional Features:**
+   - Search functionality
+   - User profiles
+   - Playlist creation and management
+   - Like/save tracks
+   - Comments and ratings
+   - Following creators
+   - Recommendations algorithm
+
+4. **Performance:**
+   - Lazy loading for track cards
+   - Image optimization
+   - Audio caching
+   - CDN for static assets
+
+## License
+
+MIT
+
+## Contributing
+
+Feel free to submit issues and pull requests!
